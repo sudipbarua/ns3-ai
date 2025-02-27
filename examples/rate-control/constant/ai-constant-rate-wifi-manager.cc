@@ -176,7 +176,7 @@ AiConstantRateWifiManager::DoGetRtsTxVector(WifiRemoteStation* st)
     NS_LOG_FUNCTION(this << st);
     return WifiTxVector(
         m_ctlMode,
-        GetDefaultTxPowerLevel(),
+        GetDefaultTxPowerLevel(),  
         GetPreambleForTransmission(m_ctlMode.GetModulationClass(), GetShortPreambleEnabled()),
         GetGuardInterval(st),
         1,
