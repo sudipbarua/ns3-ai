@@ -21,7 +21,8 @@ ns3Settings = {
     'adrType': 'LorawanRlAdr',
     }
 
-exp = Experiment("ns3ai_lorawan_rl_adr", "../../../../../", py_binding, handleFinish=True)  # ns3ai_lorawan_rl_adr can be found in the cmakelist file
+# Going up 4 times we will reach the root directory of the ns-3 project
+exp = Experiment("ns3ai_lorawan_rl_adr", "../../../../", py_binding, handleFinish=True)  # ns3ai_lorawan_rl_adr can be found in the cmakelist file
 msgInterface = exp.run(setting=ns3Settings, show_output=True)
 random_stream = 100
 c = AiAdrContainer(msgInterface=msgInterface, stream=random_stream)

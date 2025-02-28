@@ -9,10 +9,10 @@
 #ifndef LORAWAN_RL_ADR_H
 #define LORAWAN_RL_ADR_H
 
-#include "network-controller-components.h"
-#include "network-status.h"
+#include <ns3/network-controller-components.h>
+#include <ns3/network-status.h>
 
-#include "ns3/ai-module.h"
+#include <ns3/ai-module.h>
 #include "ns3/log.h"
 #include "ns3/object.h"
 #include "ns3/packet.h"
