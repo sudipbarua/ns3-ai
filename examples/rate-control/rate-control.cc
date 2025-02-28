@@ -149,7 +149,16 @@ main(int argc, char* argv[])
 
     // Variables to set rates of various channels in topology, Refer base topology structure.
     uint32_t csmaRate = 150;
-    uint32_t csmaDelay = 9000;
+    uint32_t csmaDelay = 9000;#include <ns3/ai-module.h>
+
+    #include <pybind11/pybind11.h>
+    #include <pybind11/stl_bind.h>
+    
+    namespace py = pybind11;
+    
+    PYBIND11_MAKE_OPAQUE(std::array<ns3::ThompsonSamplingRateStats, 64>);
+    
+    PYBIND11_MODULE(ns3ai_ratecontrol_ts_py, m)
     uint32_t p2pRate = 50;
     uint32_t p2pDelay = 10;
 

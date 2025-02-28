@@ -26,7 +26,10 @@
 
 namespace py = pybind11;
 
-PYBIND11_MAKE_OPAQUE(std::array<ns3::ThompsonSamplingRateStats, 64>);
+PYBIND11_MAKE_OPAQUE(std::array<ns3::ThompsonSamplingRateStats, 64>);  // Opaque type binding refers to the fact that the type is not fully defined in the binding code
+// This declaration for ThompsonSamplingRateStats is necessary because it is a template based container. If not declared as array, the bider treats it as opaque object.
+// The array size 64 is likely chosen based on the maximum number of possible rate adaptation states that the Thompson Sampling-based Wi-Fi manager needs to track.
+// other structs did not require declaration because they are simple struct definitions without being wrapped in std::array<>
 
 PYBIND11_MODULE(ns3ai_ratecontrol_ts_py, m)
 {
@@ -39,7 +42,7 @@ PYBIND11_MODULE(ns3ai_ratecontrol_ts_py, m)
         .def_readwrite("success", &ns3::ThompsonSamplingRateStats::success)
         .def_readwrite("fails", &ns3::ThompsonSamplingRateStats::fails)
         .def_readwrite("lastDecay", &ns3::ThompsonSamplingRateStats::lastDecay)
-        .def("__copy__", [](const ns3::ThompsonSamplingRateStats& self) {
+        .def("__copy__", [](const ns3::ThompsonSamplingRateStats& self) {       // Creating copy of the object in python. [] means that the function is overloaded
             return ns3::ThompsonSamplingRateStats(self);
         });
 
@@ -67,7 +70,7 @@ PYBIND11_MODULE(ns3ai_ratecontrol_ts_py, m)
 
     py::class_<ns3::ThompsonSamplingEnvPayloadStruct>(m, "ThompsonSamplingEnvPayloadStruct")
         .def(py::init<>())
-        .def_readwrite("stats", &ns3::ThompsonSamplingEnvPayloadStruct::stats)
+        .def_readwrite("stats", &ns3::ThompsonSamplingEnvPayloadStruct::stats)  // stats is a ThompsonSamplingRateStatsArray. But python will see it as a class with attributes
         .def_readwrite("decay", &ns3::ThompsonSamplingEnvPayloadStruct::decay);
 
     py::class_<ns3::AiThompsonSamplingEnvStruct>(m, "PyEnvStruct")
@@ -85,6 +88,7 @@ PYBIND11_MODULE(ns3ai_ratecontrol_ts_py, m)
         .def_readwrite("res", &ns3::AiThompsonSamplingActStruct::res)
         .def_readwrite("stats", &ns3::AiThompsonSamplingActStruct::stats);
 
+    // Handling message exchange between Python and C++
     py::class_<ns3::Ns3AiMsgInterfaceImpl<ns3::AiThompsonSamplingEnvStruct,
                                           ns3::AiThompsonSamplingActStruct>>(
         m,
