@@ -29,7 +29,6 @@ target_link_libraries(ns3ai_lorawan_rl_adr_py PRIVATE
         ${libapplications}
         ${libmobility}
         ${libinternet}
-        ${libwifi}
         ${libflow-monitor}
         ${liblorawan}
         )
